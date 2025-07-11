@@ -6,10 +6,11 @@ import React, { useState } from 'react';
 const PoshPetLogo = () => (
   <img 
     // public 폴더를 기준으로 절대 경로를 사용합니다.
-    src="/assets/image_9791c6.jpg" 
+    src="/assets/image_9791c6s.jpg" 
     alt="PoshPet Logo" 
     // 로고 높이를 h-16(64px)에서 h-12(48px)로 줄여서 헤더에 맞게 조정합니다.
-    className="h-12 w-auto"
+    //className="h-12 w-auto"
+    className="h-10 md:h-12 max-w-[140px] md:max-w-[180px] w-auto"
   />
 );
 
@@ -182,11 +183,13 @@ export default function App() {
       <footer id="about" className="py-12" style={{ backgroundColor: brandColors.footerBg, color: brandColors.footerText }}>
         <div className="container mx-auto px-6 text-center">
           <div className="flex justify-center mb-6">
-             <img 
+             <img
                 src="/assets/image_9791c6.jpg" 
                 alt="PoshPet Logo" 
                 // 푸터 로고 높이를 h-20(80px)에서 h-16(64px)로 줄여서 조정합니다.
-                className="h-16 w-auto filter invert"
+                //className="h-10 md:h-12 max-w-[140px] md:max-w-[180px] w-auto"
+                className="h-10 md:h-12 max-w-[140px] md:max-w-[180px] w-auto"
+
               />
           </div>
           <p className="mb-4" style={{ color: brandColors.footerTextSecondary }}>
