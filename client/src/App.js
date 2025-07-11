@@ -8,7 +8,8 @@ const PoshPetLogo = () => (
     // public 폴더를 기준으로 절대 경로를 사용합니다.
     src="/assets/image_9791c6.jpg" 
     alt="PoshPet Logo" 
-    className="h-16 w-auto"
+    // 로고 높이를 h-16(64px)에서 h-12(48px)로 줄여서 헤더에 맞게 조정합니다.
+    className="h-12 w-auto"
   />
 );
 
@@ -182,10 +183,10 @@ export default function App() {
         <div className="container mx-auto px-6 text-center">
           <div className="flex justify-center mb-6">
              <img 
-                // 푸터 로고도 public 폴더를 기준으로 경로를 수정합니다.
                 src="/assets/image_9791c6.jpg" 
                 alt="PoshPet Logo" 
-                className="h-20 w-auto filter invert"
+                // 푸터 로고 높이를 h-20(80px)에서 h-16(64px)로 줄여서 조정합니다.
+                className="h-16 w-auto filter invert"
               />
           </div>
           <p className="mb-4" style={{ color: brandColors.footerTextSecondary }}>
