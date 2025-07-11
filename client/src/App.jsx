@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 // 로고 이미지 컴포넌트
 const PoshPetLogo = () => (
   <img 
-    // public 폴더를 기준으로 정확한 파일 경로를 사용합니다.
     src="/assets/image_9791c6.jpg" 
     alt="PoshPet Logo" 
     // 화면 크기에 따라 로고 크기가 자연스럽게 조절되도록 수정했습니다.
