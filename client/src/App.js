@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
 
+// 로고 이미지는 이제 'public' 폴더에서 직접 참조하므로, import 구문이 필요 없습니다.
+
 // 로고 이미지 컴포넌트
 const PoshPetLogo = () => (
   <img 
-    src="https://googleusercontent.com/file_content/4" 
+    // public 폴더를 기준으로 절대 경로를 사용합니다.
+    src="/assets/image_9791c6.jpg" 
     alt="PoshPet Logo" 
-    className="h-16 w-auto" // 로고 크기 조절
+    className="h-16 w-auto"
   />
 );
 
 // 아이콘을 위한 SVG 컴포넌트들
-const ScissorsIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
-);
-const HotelIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 4l9 5.5"></path><path d="M19 13v6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5V13"></path><path d="M12 15v5"></path><path d="M9 12v8"></path><path d="M15 12v8"></path></svg>
-);
-const SpaIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a7 7 0 00-7-7c0-2 1-4 3-5s4-1 6 0c2 1 3 3 3 5a7 7 0 00-7 7z"></path><path d="M12 15V3"></path><path d="M9 3h6"></path><path d="M9 6h6"></path></svg>
-);
-const TrainingIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 14l-8-8 1.5-1.5L12 11l6.5-6.5L20 6l-8 8z"></path><path d="M12 14v8"></path></svg>
-);
-const HealthCareIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L12 22"></path><path d="M20 10L4 10"></path></svg>
-);
-
+const ScissorsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg> );
+const HotelIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 4l9 5.5"></path><path d="M19 13v6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5V13"></path><path d="M12 15v5"></path><path d="M9 12v8"></path><path d="M15 12v8"></path></svg> );
+const SpaIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a7 7 0 00-7-7c0-2 1-4 3-5s4-1 6 0c2 1 3 3 3 5a7 7 0 00-7 7z"></path><path d="M12 15V3"></path><path d="M9 3h6"></path><path d="M9 6h6"></path></svg> );
+const TrainingIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 14l-8-8 1.5-1.5L12 11l6.5-6.5L20 6l-8 8z"></path><path d="M12 14v8"></path></svg> );
+const HealthCareIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L12 22"></path><path d="M20 10L4 10"></path></svg> );
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [serverStatus, setServerStatus] = useState('서버 상태 확인 버튼을 눌러주세요.');
+
+  const checkServer = async () => {
+    try {
+      const serverUrl = 'https://poshpet-server.onrender.com'; 
+      
+      setServerStatus('서버에 연결하는 중...');
+      const response = await fetch(serverUrl);
+      const data = await response.text();
+      setServerStatus(`서버 응답: ${data}`);
+    } catch (error) {
+      console.error('서버 연결 실패:', error);
+      setServerStatus('서버에 연결할 수 없습니다. 주소를 확인해주세요.');
+    }
+  };
 
   const services = [
     { name: '미용', description: '숙련된 그루머가 최신 스타일로 완벽하게 케어합니다.', icon: <ScissorsIcon /> },
@@ -51,7 +58,6 @@ export default function App() {
 
   return (
     <div className="font-sans" style={{ backgroundColor: brandColors.bg, color: brandColors.textPrimary }}>
-      {/* Header */}
       <header className="shadow-sm sticky top-0 z-50" style={{ backgroundColor: brandColors.bg }}>
         <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
           <a href="#">
@@ -72,7 +78,6 @@ export default function App() {
             </button>
           </div>
         </nav>
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4" style={{ backgroundColor: brandColors.bg }}>
             <a href="#services" className="block px-6 py-2" style={{ color: brandColors.textSecondary }}>서비스</a>
@@ -88,7 +93,6 @@ export default function App() {
         )}
       </header>
 
-      {/* Hero Section */}
       <main>
         <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-center text-white px-6">
           <div className="absolute inset-0 bg-black opacity-30"></div>
@@ -108,7 +112,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Services Section */}
         <section id="services" className="py-20" style={{ backgroundColor: 'white' }}>
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-3xl font-bold mb-4" style={{ color: brandColors.textPrimary }}>PoshPet의 특별한 서비스</h2>
@@ -129,7 +132,6 @@ export default function App() {
           </div>
         </section>
 
-        {/* How to Book Section */}
         <section id="booking" className="py-20">
           <div className="container mx-auto px-6">
             <h2 className="text-3xl font-bold text-center mb-12" style={{ color: brandColors.textPrimary }}>간편한 예약 절차</h2>
@@ -162,14 +164,28 @@ export default function App() {
         </section>
       </main>
 
-      {/* Footer */}
+      <div className="text-center py-10 bg-white">
+        <h3 className="text-xl font-bold mb-4" style={{ color: brandColors.textPrimary }}>서버 연결 테스트</h3>
+        <button 
+          onClick={checkServer}
+          className="text-white px-6 py-3 rounded-full font-semibold hover:opacity-90 transition" 
+          style={{ backgroundColor: brandColors.accent }}
+        >
+          서버 상태 확인
+        </button>
+        <p className="mt-4 p-4 rounded-lg" style={{ backgroundColor: brandColors.accentLight, color: brandColors.textSecondary }}>
+          {serverStatus}
+        </p>
+      </div>
+
       <footer id="about" className="py-12" style={{ backgroundColor: brandColors.footerBg, color: brandColors.footerText }}>
         <div className="container mx-auto px-6 text-center">
           <div className="flex justify-center mb-6">
              <img 
-                src="https://googleusercontent.com/file_content/4" 
+                // 푸터 로고도 public 폴더를 기준으로 경로를 수정합니다.
+                src="/assets/image_9791c6.jpg" 
                 alt="PoshPet Logo" 
-                className="h-20 w-auto filter invert" // 푸터에 맞게 로고를 흰색으로 반전
+                className="h-20 w-auto filter invert"
               />
           </div>
           <p className="mb-4" style={{ color: brandColors.footerTextSecondary }}>
