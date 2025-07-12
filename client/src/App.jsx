@@ -19,8 +19,7 @@ const HealthCareIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // 이전에 발생했던 오타를 모두 수정했습니다.
-  const = useState('서버 상태 확인 버튼을 눌러주세요.');
+  const [serverStatus, setServerStatus] = useState('서버 상태 확인 버튼을 눌러주세요.');
 
   const checkServer = async () => {
     try {
