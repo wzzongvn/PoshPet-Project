@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+// 로고 이미지는 이제 'public' 폴더에서 직접 참조하므로, import 구문이 필요 없습니다.
+
 // 로고 이미지 컴포넌트
 const PoshPetLogo = () => (
   <img 
@@ -11,7 +13,7 @@ const PoshPetLogo = () => (
   />
 );
 
-// 아이콘 SVG 컴포넌트들
+// 아이콘을 위한 SVG 컴포넌트들
 const ScissorsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg> );
 const HotelIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 4l9 5.5"></path><path d="M19 13v6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5V13"></path><path d="M12 15v5"></path><path d="M9 12v8"></path><path d="M15 12v8"></path></svg> );
 const SpaIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a7 7 0 00-7-7c0-2 1-4 3-5s4-1 6 0c2 1 3 3 3 5a7 7 0 00-7 7z"></path><path d="M12 15V3"></path><path d="M9 3h6"></path><path d="M9 6h6"></path></svg> );
@@ -20,11 +22,12 @@ const HealthCareIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="24
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const = useState('서버 상태 확인 버튼을 눌러주세요.');
+  const [serverStatus, setServerStatus] = useState('서버 상태 확인 버튼을 눌러주세요.');
 
   const checkServer = async () => {
     try {
-      const serverUrl = 'https://poshpet-server.onrender.com';
+      const serverUrl = 'https://poshpet-server.onrender.com'; 
+      
       setServerStatus('서버에 연결하는 중...');
       const response = await fetch(serverUrl);
       const data = await response.text();
@@ -34,8 +37,7 @@ export default function App() {
       setServerStatus('서버에 연결할 수 없습니다. 주소를 확인해주세요.');
     }
   };
-
-  const services =;
+const services =;
 
   const brandColors = {
     bg: '#F8F5F0',
