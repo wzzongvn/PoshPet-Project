@@ -156,7 +156,7 @@ const services =;
             </div>
           </div>
         </section>
-      </main>
+      </main> 
 
       <div className="text-center py-10 bg-white">
         <h3 className="text-xl font-bold mb-4" style={{ color: brandColors.textPrimary }}>서버 연결 테스트</h3>
