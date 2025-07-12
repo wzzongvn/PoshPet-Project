@@ -37,7 +37,8 @@ export default function App() {
       setServerStatus('서버에 연결할 수 없습니다. 주소를 확인해주세요.');
     }
   };
-const services =;
+
+  const services =;
 
   const brandColors = {
     bg: '#F8F5F0',
