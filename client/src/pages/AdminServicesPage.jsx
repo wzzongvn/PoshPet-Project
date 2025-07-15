@@ -1,8 +1,8 @@
 /*
 * =======================================================================
-* 새 파일: client/src/pages/AdminServicesPage.jsx
+* 파일: client/src/pages/AdminServicesPage.jsx (수정)
 * =======================================================================
-* 설명: 관리자가 서비스를 보고, 새로 추가할 수 있는 페이지입니다.
+* 설명: 서버가 보내주는 실제 에러 메시지를 화면에 직접 표시하도록 수정합니다.
 */
 import React, { useState, useEffect } from 'react';
 import { getAllServices, createService } from '../services/api.js';
@@ -25,7 +25,9 @@ export default function AdminServicesPage() {
         const response = await getAllServices();
         setServices(response.data);
       } catch (err) {
-        setError('서비스 정보를 불러오는 데 실패했습니다.');
+        // ★★★ 디버그 코드: 서버가 보내는 실제 에러 메시지를 표시합니다. ★★★
+        const errorMsg = err.response?.data?.msg || err.message || '알 수 없는 오류가 발생했습니다.';
+        setError(`서비스 정보를 불러오는 데 실패했습니다: ${errorMsg}`);
       }
     };
     fetchServices();
@@ -49,7 +51,9 @@ export default function AdminServicesPage() {
       setShowAddForm(false);
       setName(''); setDescription(''); setPrice(''); setDuration('');
     } catch (err) {
-      setError(err.response?.data?.msg || '서비스 추가에 실패했습니다.');
+      // ★★★ 디버그 코드: 서버가 보내는 실제 에러 메시지를 표시합니다. ★★★
+      const errorMsg = err.response?.data?.msg || err.message || '알 수 없는 오류가 발생했습니다.';
+      setError(`서비스 추가에 실패했습니다: ${errorMsg}`);
     }
   };
 
@@ -64,6 +68,9 @@ export default function AdminServicesPage() {
             {showAddForm ? '취소' : '새 서비스 추가'}
           </button>
         </div>
+        {/* 서비스 목록이 비어있을 때와 에러 발생 시를 구분하여 표시 */}
+        {error && !showAddForm && <p className="text-sm text-red-600">{error}</p>}
+        {!error && services.length === 0 && <p className="text-gray-500">아직 등록된 서비스가 없습니다.</p>}
         <ul className="divide-y divide-gray-200">
           {services.map(service => (
             <li key={service._id} className="py-4">
@@ -97,6 +104,7 @@ export default function AdminServicesPage() {
                 <input type="number" id="service-duration" value={duration} onChange={e => setDuration(e.target.value)} required className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
               </div>
             </div>
+            {/* 폼 아래에 에러/성공 메시지 표시 */}
             {error && <p className="text-sm text-red-600">{error}</p>}
             {success && <p className="text-sm text-green-600">{success}</p>}
             <div className="text-right">
