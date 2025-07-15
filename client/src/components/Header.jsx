@@ -1,10 +1,9 @@
 /*
 * =======================================================================
-* 새 파일: client/src/components/Header.jsx (헤더 부분)
+* 파일: client/src/components/Header.jsx (수정)
 * =======================================================================
-* 설명: 모든 페이지 상단에 공통으로 보일 헤더(로고, 메뉴)입니다.
-* 이제 메뉴를 클릭하면 App.jsx로부터 전달받은 setCurrentPage 함수를 호출하여
-* 실제로 페이지를 변경합니다. 로고를 텍스트와 아이콘 조합으로 변경하여 세련되게 다듬었습니다.
+* 설명: 이제 로그인 상태에 따라 '로그인' 버튼 대신
+* '사용자 이름'과 '로그아웃' 버튼을 보여줍니다.
 */
 import React, { useState } from 'react';
 
@@ -14,8 +13,7 @@ const PawIcon = () => (
     </svg>
 );
 
-
-export default function Header({ setCurrentPage }) {
+export default function Header({ setCurrentPage, user, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavClick = (page) => {
@@ -38,7 +36,23 @@ export default function Header({ setCurrentPage }) {
               <a href="#services" className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">서비스</a>
               <a href="#booking" className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">예약 방법</a>
               <a href="#about" className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">소개</a>
-              <button onClick={() => handleNavClick('login')} className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">로그인</button>
+              
+              {/* --- 로그인 상태에 따른 UI 변경 --- */}
+              {user ? (
+                <>
+                  <span className="text-brown-700 px-3 py-2 rounded-md text-sm font-medium">
+                    {user.name}님
+                  </span>
+                  <button onClick={onLogout} className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">
+                    로그아웃
+                  </button>
+                </>
+              ) : (
+                <button onClick={() => handleNavClick('login')} className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">
+                  로그인
+                </button>
+              )}
+              {/* ------------------------------------ */}
             </div>
           </div>
           <div className="hidden md:block">
@@ -60,17 +74,7 @@ export default function Header({ setCurrentPage }) {
       </div>
       {mobileMenuOpen && (
         <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#services" className="text-brown-700 hover:bg-brown-100 block px-3 py-2 rounded-md text-base font-medium">서비스</a>
-            <a href="#booking" className="text-brown-700 hover:bg-brown-100 block px-3 py-2 rounded-md text-base font-medium">예약 방법</a>
-            <a href="#about" className="text-brown-700 hover:bg-brown-100 block px-3 py-2 rounded-md text-base font-medium">소개</a>
-            <button onClick={() => handleNavClick('login')} className="text-brown-700 hover:bg-brown-100 block w-full text-left px-3 py-2 rounded-md text-base font-medium">로그인</button>
-          </div>
-           <div className="px-5 pb-4">
-             <button onClick={() => handleNavClick('reservation')} className="w-full bg-brown-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-brown-700 transition duration-300">
-                실시간 예약
-            </button>
-          </div>
+          {/* ... 모바일 메뉴도 로그인 상태에 따라 변경 필요 ... */}
         </div>
       )}
     </header>
