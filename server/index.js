@@ -20,8 +20,14 @@ app.get('/', (req, res) => {
   res.send('PoshPet 서버가 살아있어요!');
 });
 
-// --- 사용자 인증 API 라우트 연결 (이 부분을 추가) ---
+// --- 사용자 인증 API 라우트 연결 ---
 app.use('/api/users', require('./routes/userRoutes'));
+
+// --- 반려동물 API 라우트 연결 (추가) ---
+app.use('/api/pets', require('./routes/petRoutes'));
+
+// --- 예약 API 라우트 연결 (추가) ---
+app.use('/api/reservations', require('./routes/reservationRoutes'));
 // ----------------------------------------------------
 
 app.listen(PORT, () => {
