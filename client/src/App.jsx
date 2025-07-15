@@ -5,13 +5,13 @@
 * 설명: '마이페이지'로 이동할 수 있도록 라우팅 로직을 추가합니다.
 */
 import React, { useState, useEffect } from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import ReservationPage from './pages/ReservationPage';
-// ★★★ 에러 해결: 파일 경로에 .jsx 확장자를 명시적으로 추가합니다. ★★★
-import MyPage from './pages/MyPage'; 
+// ★★★ 에러 해결: 모든 파일 경로에 .jsx 확장자를 명시적으로 추가합니다. ★★★
+import Header from './components/Header.jsx';
+import Footer from './components/Footer.jsx';
+import HomePage from './pages/HomePage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import ReservationPage from './pages/ReservationPage.jsx';
+import MyPage from './pages/MyPage.jsx'; 
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
