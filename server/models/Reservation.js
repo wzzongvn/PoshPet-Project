@@ -1,33 +1,26 @@
-// 파일: server/models/Reservation.js
+// 파일: server/models/Reservation.js (수정)
 const mongoose = require('mongoose');
 
 const ReservationSchema = new mongoose.Schema({
-  user: { // 예약한 사용자
+  // ... user, pet 필드는 변경 없음 ...
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pet', required: true },
+
+  // --- 이 부분을 수정합니다 ---
+  service: { // 예약한 서비스
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Service', // Service 모델을 참조
     required: true,
   },
-  pet: { // 예약된 반려동물
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pet',
-    required: true,
-  },
-  serviceName: { // 예약한 서비스 이름 (e.g., '전문 미용')
-    type: String,
-    required: true,
-  },
+  // --------------------------
+
   reservationDate: { // 예약 날짜 및 시간
     type: Date,
     required: true,
   },
-  status: { // 예약 상태
-    type: String,
-    enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled'],
-    default: 'Pending',
-  },
-  notes: { // 고객 요청사항
-      type: String,
-  }
+  // ... status, notes, timestamps 등은 변경 없음 ...
+  status: { type: String, enum: ['Pending', 'Confirmed', 'Completed', 'Cancelled'], default: 'Pending' },
+  notes: { type: String }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Reservation', ReservationSchema);

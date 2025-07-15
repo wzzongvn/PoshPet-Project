@@ -32,6 +32,10 @@ app.use('/api/reservations', require('./routes/reservationRoutes'));
 // --- 관리자 API 라우트 연결 (추가) ---
 app.use('/api/admin', require('./routes/adminRoutes'));
 
+// --- 서비스 API 라우트 연결 (추가) ---
+app.use('/api/services', require('./routes/serviceRoutes'));
+
+
 // ----------------------------------------------------
 
 app.listen(PORT, () => {
