@@ -5,8 +5,8 @@ const PoshPetLogo = () => (
   <img 
     src="/assets/image_9791c6.jpg" 
     alt="PoshPet Logo" 
-    // 로고 높이를 화면 크기에 따라 자연스럽게 조절하도록 수정했습니다.
-    className="h-12 md:h-14 w-auto"
+    // 로고 크기를 명확하게 제한하여 레이아웃이 깨지지 않도록 수정했습니다.
+    className="h-12 w-auto"
   />
 );
 
@@ -34,7 +34,6 @@ export default function App() {
     }
   };
 
-  // ★★★ 에러가 발생했던 부분을 아래와 같이 올바르게 수정했습니다. ★★★
   const services = [
     { name: '미용', description: '숙련된 그루머가 최신 스타일로 완벽하게 케어합니다.', icon: <ScissorsIcon /> },
     { name: '호텔', description: '넓고 쾌적한 공간에서 편안하고 안전하게 머무릅니다.', icon: <HotelIcon /> },
