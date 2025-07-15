@@ -46,8 +46,8 @@ export default function App() {
 
   return (
     <div className="font-sans" style={{ backgroundColor: brandColors.bg, color: brandColors.textPrimary }}>
-      <header className="shadow-sm sticky top-0 z-50" style={{ backgroundColor: brandColors.bg }}>
-        <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
+      <header className="shadow-sm sticky top-0 z-50 h-[64px]" style={{ backgroundColor: brandColors.bg }}>
+        <nav className="container mx-auto px-6 h-full flex items-center justify-between">
           <a href="#"><PoshPetLogo /></a>
           <div className="hidden md:flex items-center space-x-8">
             <a href="#services" className="hover:opacity-75" style={{ color: brandColors.textSecondary }}>서비스</a>
