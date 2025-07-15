@@ -1,6 +1,4 @@
-컨트롤러 생성: server/controllers 폴더 안에 serviceController.js 파일을 만들고 아래 코드를 붙여넣습니다.
-
-// 파일: server/controllers/serviceController.js
+// 파일: server/controllers/serviceController.js (수정)
 const Service = require('../models/Service');
 
 // (관리자용) 새 서비스 추가
@@ -10,7 +8,12 @@ exports.createService = async (req, res) => {
     await newService.save();
     res.status(201).json(newService);
   } catch (err) {
-    res.status(500).json({ error: '서버 오류' });
+    console.error("Service creation error:", err.message); // 서버 로그에 에러 기록
+    // ★★★ 문제 해결: 프론트엔드로 더 구체적인 에러 메시지를 전달합니다. ★★★
+    if (err.code === 11000) { // 중복된 이름(unique) 오류일 경우
+      return res.status(400).json({ msg: '이미 존재하는 서비스 이름입니다.' });
+    }
+    res.status(500).json({ msg: '서버 오류가 발생했습니다. 입력값을 확인해주세요.' });
   }
 };
 
@@ -20,6 +23,7 @@ exports.getAllServices = async (req, res) => {
     const services = await Service.find();
     res.json(services);
   } catch (err) {
-    res.status(500).json({ error: '서버 오류' });
+    console.error(err.message);
+    res.status(500).json({ msg: '서버 오류' });
   }
 };
