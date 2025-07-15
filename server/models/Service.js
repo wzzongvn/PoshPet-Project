@@ -1,23 +1,13 @@
-// 파일: server/models/Service.js
+/*
+* =======================================================================
+* 파일: server/models/Service.js (최종본)
+* =======================================================================
+*/
 const mongoose = require('mongoose');
-
 const ServiceSchema = new mongoose.Schema({
-  name: { // 서비스 이름 (e.g., '전문 미용')
-    type: String,
-    required: true,
-    unique: true,
-  },
-  description: {
-    type: String,
-  },
-  price: { // 가격
-    type: Number,
-    required: true,
-  },
-  duration: { // 소요 시간 (분 단위)
-    type: Number,
-    required: true,
-  },
+  name: { type: String, required: true, unique: true },
+  description: { type: String },
+  price: { type: Number, required: true },
+  duration: { type: Number, required: true },
 });
-
 module.exports = mongoose.model('Service', ServiceSchema);

@@ -1,18 +1,14 @@
-// 파일: server/controllers/petController.js
+/*
+* =======================================================================
+* 파일: server/controllers/petController.js (최종본)
+* =======================================================================
+*/
 const Pet = require('../models/Pet');
 
-// 로그인한 사용자의 반려동물 추가
 exports.addPet = async (req, res) => {
   try {
     const { name, type, breed, birthDate, notes } = req.body;
-    const newPet = new Pet({
-      owner: req.user.id, // 인증 미들웨어에서 추가해준 사용자 ID
-      name,
-      type,
-      breed,
-      birthDate,
-      notes,
-    });
+    const newPet = new Pet({ owner: req.user.id, name, type, breed, birthDate, notes });
     const pet = await newPet.save();
     res.status(201).json(pet);
   } catch (err) {
@@ -21,7 +17,6 @@ exports.addPet = async (req, res) => {
   }
 };
 
-// 로그인한 사용자의 모든 반려동물 정보 가져오기
 exports.getMyPets = async (req, res) => {
   try {
     const pets = await Pet.find({ owner: req.user.id });

@@ -1,29 +1,15 @@
-// 파일: server/models/Pet.js
+/*
+* =======================================================================
+* 파일: server/models/Pet.js (최종본)
+* =======================================================================
+*/
 const mongoose = require('mongoose');
-
 const PetSchema = new mongoose.Schema({
-  owner: { // 반려동물의 주인
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // User 모델을 참조합니다.
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  type: { // e.g., 'Dog', 'Cat'
-    type: String,
-    required: true,
-  },
-  breed: { // 품종
-    type: String,
-  },
-  birthDate: {
-    type: Date,
-  },
-  notes: { // 특이사항
-    type: String,
-  },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  breed: { type: String },
+  birthDate: { type: Date },
+  notes: { type: String },
 }, { timestamps: true });
-
 module.exports = mongoose.model('Pet', PetSchema);

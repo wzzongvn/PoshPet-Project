@@ -1,19 +1,24 @@
-// 파일: server/index.js (최종 수정)
+/*
+* =======================================================================
+* 파일: server/index.js (최종본)
+* =======================================================================
+* 설명: 서버의 시작점입니다. 모든 API 주소(라우트)를 등록하고,
+* CORS 정책을 설정하며, 데이터베이스에 연결합니다.
+*/
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 10000; // Render는 10000번 포트를 사용합니다.
+const PORT = process.env.PORT || 10000;
 
-// ★★★ 문제 해결: Vercel에서 오는 요청을 명시적으로 허용하도록 CORS 설정을 수정합니다. ★★★
+// CORS 설정: Vercel 프론트엔드에서의 요청을 허용합니다.
 const corsOptions = {
-  origin: 'https://poshpet-client.vercel.app', // Vercel 주소를 명시적으로 허용
+  origin: 'https://poshpet-client.vercel.app',
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
-// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 app.use(express.json());
 
