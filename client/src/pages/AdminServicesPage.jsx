@@ -13,8 +13,8 @@ export default function AdminServicesPage() {
   
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [price, setPrice] = useState('');
+  const [duration, setDuration] = useState('');
   
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -36,11 +36,18 @@ export default function AdminServicesPage() {
     setError('');
     setSuccess('');
     try {
-      const response = await createService({ name, description, price, duration });
+      const serviceData = {
+        name,
+        description,
+        price: parseInt(price, 10),
+        duration: parseInt(duration, 10)
+      };
+
+      const response = await createService(serviceData);
       setServices([...services, response.data]);
       setSuccess(`${name} 서비스가 성공적으로 추가되었습니다.`);
       setShowAddForm(false);
-      setName(''); setDescription(''); setPrice(0); setDuration(0);
+      setName(''); setDescription(''); setPrice(''); setDuration('');
     } catch (err) {
       setError(err.response?.data?.msg || '서비스 추가에 실패했습니다.');
     }

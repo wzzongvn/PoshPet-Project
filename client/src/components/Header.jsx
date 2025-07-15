@@ -33,7 +33,6 @@ export default function Header({ setCurrentPage, user, onLogout }) {
                   <button onClick={() => setCurrentPage('admin-dashboard')} className="bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium">
                     예약 관리
                   </button>
-                  {/* ★★★ 서비스 관리 버튼 추가 ★★★ */}
                   <button onClick={() => setCurrentPage('admin-services')} className="bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium">
                     서비스 관리
                   </button>
@@ -74,7 +73,20 @@ export default function Header({ setCurrentPage, user, onLogout }) {
       {mobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {/* Mobile Menu Links */}
+            {user && user.role === 'admin' && (
+                <>
+                  <button onClick={() => handleNavClick('admin-dashboard')} className="w-full text-left text-red-600 font-bold block px-3 py-2 rounded-md text-base">예약 관리</button>
+                  <button onClick={() => handleNavClick('admin-services')} className="w-full text-left text-blue-600 font-bold block px-3 py-2 rounded-md text-base">서비스 관리</button>
+                </>
+            )}
+            {user && user.role !== 'admin' && (
+              <button onClick={() => handleNavClick('my-page')} className="text-brown-700 hover:bg-brown-100 block px-3 py-2 rounded-md text-base font-medium">마이페이지</button>
+            )}
+            {user ? (
+              <button onClick={onLogout} className="text-brown-700 hover:bg-brown-100 block w-full text-left px-3 py-2 rounded-md text-base font-medium">로그아웃</button>
+            ) : (
+              <button onClick={() => handleNavClick('login')} className="text-brown-700 hover:bg-brown-100 block w-full text-left px-3 py-2 rounded-md text-base font-medium">로그인</button>
+            )}
           </div>
         </div>
       )}
