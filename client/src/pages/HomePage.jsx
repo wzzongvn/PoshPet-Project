@@ -1,13 +1,10 @@
 /*
 * =======================================================================
-* 새 파일: client/src/pages/HomePage.jsx (메인 페이지 내용)
+* 파일: client/src/pages/HomePage.jsx
 * =======================================================================
-* 설명: 전체적인 디자인을 세련되게 다듬고, 가독성을 높였습니다.
-* 서버 연결 테스트 기능은 개발 중에만 필요하므로 잠시 숨겨두었습니다.
 */
 import React from 'react';
 
-// 아이콘 SVG 컴포넌트들
 const ScissorsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg> );
 const HotelIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 4l9 5.5"></path><path d="M19 13v6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5V13"></path><path d="M12 15v5"></path><path d="M9 12v8"></path><path d="M15 12v8"></path></svg> );
 const SpaIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a7 7 0 00-7-7c0-2 1-4 3-5s4-1 6 0c2 1 3 3 3 5a7 7 0 00-7 7z"></path><path d="M12 15V3"></path><path d="M9 3h6"></path><path d="M9 6h6"></path></svg> );
@@ -25,10 +22,8 @@ export default function HomePage({ setCurrentPage }) {
 
   return (
     <div className="bg-cream-50">
-      {/* Hero Section */}
       <div className="relative">
         <div className="absolute inset-0">
-          {/* 깨진 이미지 주소를 새로운 이미지로 교체했습니다. */}
           <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1598810553911-b7ea245c4b1b?q=80&w=2070&auto=format&fit=crop" alt="행복하게 미용받는 강아지" />
           <div className="absolute inset-0 bg-gray-800 mix-blend-multiply" style={{opacity: 0.5}}></div>
         </div>
@@ -46,8 +41,6 @@ export default function HomePage({ setCurrentPage }) {
           </div>
         </div>
       </div>
-
-      {/* Services Section */}
       <section id="services" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
@@ -65,11 +58,7 @@ export default function HomePage({ setCurrentPage }) {
                 <div key={service.name} className="pt-6">
                   <div className="flow-root bg-cream-50 rounded-lg px-6 pb-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
                     <div className="-mt-6">
-                      <div>
-                        <span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">
-                          {service.icon}
-                        </span>
-                      </div>
+                      <div><span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">{service.icon}</span></div>
                       <h3 className="mt-8 text-lg font-medium text-brown-800 tracking-tight font-serif">{service.name}</h3>
                       <p className="mt-5 text-base text-gray-500">{service.description}</p>
                     </div>
@@ -84,11 +73,7 @@ export default function HomePage({ setCurrentPage }) {
                 <div key={service.name} className="pt-6">
                   <div className="flow-root bg-cream-50 rounded-lg px-6 pb-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
                     <div className="-mt-6">
-                      <div>
-                        <span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">
-                          {service.icon}
-                        </span>
-                      </div>
+                      <div><span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">{service.icon}</span></div>
                       <h3 className="mt-8 text-lg font-medium text-brown-800 tracking-tight font-serif">{service.name}</h3>
                       <p className="mt-5 text-base text-gray-500">{service.description}</p>
                     </div>
@@ -99,8 +84,6 @@ export default function HomePage({ setCurrentPage }) {
           </div>
         </div>
       </section>
-
-      {/* How to Book Section */}
       <section id="booking" className="py-20 bg-cream-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
@@ -108,21 +91,9 @@ export default function HomePage({ setCurrentPage }) {
                 <p className="mt-4 text-lg text-gray-500">단 3단계만으로 소중한 반려동물에게 최고의 시간을 선물하세요.</p>
             </div>
             <div className="mt-12 space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
-                <div className="text-center">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">1</div>
-                    <h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">서비스 선택</h3>
-                    <p className="mt-2 text-base text-gray-500">원하시는 서비스를 선택하세요.</p>
-                </div>
-                <div className="text-center">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">2</div>
-                    <h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">날짜/시간 선택</h3>
-                    <p className="mt-2 text-base text-gray-500">예약 가능한 날짜와 시간을 확인해요.</p>
-                </div>
-                <div className="text-center">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">3</div>
-                    <h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">예약 및 결제</h3>
-                    <p className="mt-2 text-base text-gray-500">간편하게 예약하고 결제를 완료해요.</p>
-                </div>
+                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">1</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">서비스 선택</h3><p className="mt-2 text-base text-gray-500">원하시는 서비스를 선택하세요.</p></div>
+                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">2</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">날짜/시간 선택</h3><p className="mt-2 text-base text-gray-500">예약 가능한 날짜와 시간을 확인해요.</p></div>
+                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">3</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">예약 및 결제</h3><p className="mt-2 text-base text-gray-500">간편하게 예약하고 결제를 완료해요.</p></div>
             </div>
         </div>
       </section>
