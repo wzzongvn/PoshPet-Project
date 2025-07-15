@@ -29,7 +29,7 @@ export default function Header({ setCurrentPage }) {
     <header className="shadow-sm sticky top-0 z-50" style={{ backgroundColor: brandColors.bg }}>
       <nav className="container mx-auto px-6 py-2 flex justify-between items-center">
         <button onClick={() => handleNavClick('home')} className="cursor-pointer">
-          /* <PoshPetLogo /> */
+//          <PoshPetLogo />
         </button>
         <div className="hidden md:flex items-center space-x-8">
           <a href="#services" className="hover:opacity-75" style={{ color: brandColors.textSecondary }}>서비스</a>
