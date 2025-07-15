@@ -1,7 +1,8 @@
 /*
 * =======================================================================
-* 파일: client/src/components/Header.jsx
+* 파일: client/src/components/Header.jsx (수정)
 * =======================================================================
+* 설명: 로그인한 사용자가 'admin'일 경우 '관리자' 버튼을 보여줍니다.
 */
 import React, { useState } from 'react';
 
@@ -31,6 +32,12 @@ export default function Header({ setCurrentPage, user, onLogout }) {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
+              {/* ★★★ 관리자 버튼 추가 ★★★ */}
+              {user && user.role === 'admin' && (
+                <button onClick={() => handleNavClick('admin-dashboard')} className="bg-red-600 text-white px-3 py-2 rounded-md text-sm font-medium">
+                  관리자
+                </button>
+              )}
               {user && (
                 <button onClick={() => handleNavClick('my-page')} className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">
                   마이페이지

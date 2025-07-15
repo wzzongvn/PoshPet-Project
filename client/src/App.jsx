@@ -1,7 +1,8 @@
 /*
 * =======================================================================
-* 파일: client/src/App.jsx
+* 파일: client/src/App.jsx (수정)
 * =======================================================================
+* 설명: '관리자 대시보드' 페이지로 이동하는 로직을 추가합니다.
 */
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
@@ -9,17 +10,16 @@ import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ReservationPage from './pages/ReservationPage.jsx';
-// ★★★ 에러 해결: Vercel이 파일을 확실하게 인식하도록 파일 이름을 변경하고, 경로도 수정합니다. ★★★
 import MyPage from './pages/MyPageComponent.jsx'; 
+import AdminDashboard from './pages/AdminDashboard.jsx'; // 관리자 페이지 import
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
-    if (storedToken && storedUser) {
+    if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);
@@ -46,6 +46,9 @@ export default function App() {
         return <ReservationPage setCurrentPage={setCurrentPage} user={user} />;
       case 'my-page':
         return user ? <MyPage user={user} /> : <LoginPage setCurrentPage={setCurrentPage} onLogin={handleLogin} />;
+      // ★★★ 관리자 페이지 렌더링 로직 추가 ★★★
+      case 'admin-dashboard':
+        return user && user.role === 'admin' ? <AdminDashboard /> : <HomePage setCurrentPage={setCurrentPage} />;
       case 'home':
       default:
         return <HomePage setCurrentPage={setCurrentPage} />;

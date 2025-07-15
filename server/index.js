@@ -28,6 +28,10 @@ app.use('/api/pets', require('./routes/petRoutes'));
 
 // --- 예약 API 라우트 연결 (추가) ---
 app.use('/api/reservations', require('./routes/reservationRoutes'));
+
+// --- 관리자 API 라우트 연결 (추가) ---
+app.use('/api/admin', require('./routes/adminRoutes'));
+
 // ----------------------------------------------------
 
 app.listen(PORT, () => {
