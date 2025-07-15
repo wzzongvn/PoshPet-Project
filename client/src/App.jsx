@@ -19,19 +19,21 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'login':
-        return <LoginPage />;
+        return <LoginPage setCurrentPage={setCurrentPage} />;
       case 'reservation':
-        return <ReservationPage />;
+        return <ReservationPage setCurrentPage={setCurrentPage} />;
       case 'home':
       default:
-        return <HomePage />;
+        return <HomePage setCurrentPage={setCurrentPage} />;
     }
   };
 
   return (
-    <div>
+    <div className="antialiased text-gray-800">
       <Header setCurrentPage={setCurrentPage} />
-      {renderPage()}
+      <main>
+        {renderPage()}
+      </main>
       <Footer />
     </div>
   );
