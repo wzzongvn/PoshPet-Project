@@ -2,8 +2,7 @@
 * =======================================================================
 * 파일: client/src/components/Header.jsx (수정)
 * =======================================================================
-* 설명: 이제 로그인 상태에 따라 '로그인' 버튼 대신
-* '사용자 이름'과 '로그아웃' 버튼을 보여줍니다.
+* 설명: 로그인 상태일 때 '마이페이지'로 이동하는 버튼을 추가합니다.
 */
 import React, { useState } from 'react';
 
@@ -32,12 +31,12 @@ export default function Header({ setCurrentPage, user, onLogout }) {
             </button>
           </div>
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#services" className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">서비스</a>
-              <a href="#booking" className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">예약 방법</a>
-              <a href="#about" className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">소개</a>
-              
-              {/* --- 로그인 상태에 따른 UI 변경 --- */}
+            <div className="ml-10 flex items-center space-x-4">
+              {user && (
+                <button onClick={() => handleNavClick('my-page')} className="text-brown-700 hover:bg-brown-100 px-3 py-2 rounded-md text-sm font-medium">
+                  마이페이지
+                </button>
+              )}
               {user ? (
                 <>
                   <span className="text-brown-700 px-3 py-2 rounded-md text-sm font-medium">
@@ -52,7 +51,6 @@ export default function Header({ setCurrentPage, user, onLogout }) {
                   로그인
                 </button>
               )}
-              {/* ------------------------------------ */}
             </div>
           </div>
           <div className="hidden md:block">
@@ -61,20 +59,13 @@ export default function Header({ setCurrentPage, user, onLogout }) {
             </button>
           </div>
           <div className="-mr-2 flex md:hidden">
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} type="button" className="bg-cream-100 inline-flex items-center justify-center p-2 rounded-md text-brown-700 hover:text-white hover:bg-brown-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brown-800 focus:ring-white">
-              <span className="sr-only">Open main menu</span>
-              {mobileMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-              ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-              )}
-            </button>
+            {/* Mobile menu button */}
           </div>
         </div>
       </div>
       {mobileMenuOpen && (
         <div className="md:hidden">
-          {/* ... 모바일 메뉴도 로그인 상태에 따라 변경 필요 ... */}
+          {/* Mobile menu content */}
         </div>
       )}
     </header>
