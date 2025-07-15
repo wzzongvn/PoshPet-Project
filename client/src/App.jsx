@@ -11,7 +11,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ReservationPage from './pages/ReservationPage';
 // ★★★ 에러 해결: 파일 경로에 .jsx 확장자를 명시적으로 추가합니다. ★★★
-import MyPage from './pages/MyPage.jsx'; 
+import MyPage from './pages/MyPage'; 
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
