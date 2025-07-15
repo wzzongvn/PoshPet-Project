@@ -2,7 +2,7 @@
 * =======================================================================
 * 파일: client/src/App.jsx (수정)
 * =======================================================================
-* 설명: '관리자 대시보드' 페이지로 이동하는 로직을 추가합니다.
+* 설명: 관리자가 '서비스 관리' 페이지로 이동할 수 있도록 라우팅 로직을 추가합니다.
 */
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
@@ -11,7 +11,8 @@ import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ReservationPage from './pages/ReservationPage.jsx';
 import MyPage from './pages/MyPageComponent.jsx'; 
-import AdminDashboard from './pages/AdminDashboard.jsx'; // 관리자 페이지 import
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import AdminServicesPage from './pages/AdminServicesPage.jsx'; // 서비스 관리 페이지 import
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -46,9 +47,11 @@ export default function App() {
         return <ReservationPage setCurrentPage={setCurrentPage} user={user} />;
       case 'my-page':
         return user ? <MyPage user={user} /> : <LoginPage setCurrentPage={setCurrentPage} onLogin={handleLogin} />;
-      // ★★★ 관리자 페이지 렌더링 로직 추가 ★★★
       case 'admin-dashboard':
         return user && user.role === 'admin' ? <AdminDashboard /> : <HomePage setCurrentPage={setCurrentPage} />;
+      // ★★★ 서비스 관리 페이지 렌더링 로직 추가 ★★★
+      case 'admin-services':
+        return user && user.role === 'admin' ? <AdminServicesPage /> : <HomePage setCurrentPage={setCurrentPage} />;
       case 'home':
       default:
         return <HomePage setCurrentPage={setCurrentPage} />;
