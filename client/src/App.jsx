@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 // 로고 이미지 컴포넌트
 const PoshPetLogo = () => (
   <img 
-    src="/assets/poshpet_logo_optimized.png" 
+    src="/assets/image_9791c6.jpg" 
     alt="PoshPet Logo" 
     // 로고 크기를 명확하게 제한하여 레이아웃이 깨지지 않도록 수정했습니다.
-    className="h-10 md:h-12 max-w-[160px] w-auto"
+    className="h-6 md:h-12 max-w-[140px] w-auto mb-4"
   />
 );
 
