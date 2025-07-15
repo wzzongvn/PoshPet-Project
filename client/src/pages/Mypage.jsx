@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { getMyPets, addPet } from '../services/api';
 
-export default function MyPage({ user }) {
+export default function MyPage({ user }) { 
   const [pets, setPets] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   
