@@ -28,7 +28,8 @@ export default function HomePage({ setCurrentPage }) {
       {/* Hero Section */}
       <div className="relative">
         <div className="absolute inset-0">
-          <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1559947239-42357731034a?q=80&w=2070&auto=format&fit=crop" alt="행복하게 미용받는 강아지" />
+          {/* 깨진 이미지 주소를 새로운 이미지로 교체했습니다. */}
+          <img className="w-full h-full object-cover" src="https://images.unsplash.com/photo-1598810553911-b7ea245c4b1b?q=80&w=2070&auto=format&fit=crop" alt="행복하게 미용받는 강아지" />
           <div className="absolute inset-0 bg-gray-800 mix-blend-multiply" style={{opacity: 0.5}}></div>
         </div>
         <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8 text-center">
