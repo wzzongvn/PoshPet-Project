@@ -9,7 +9,8 @@ import Footer from './components/Footer.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import ReservationPage from './pages/ReservationPage.jsx';
-import MyPage from './pages/MyPage.jsx'; 
+// ★★★ 에러 해결: Vercel이 파일을 확실하게 인식하도록 파일 이름을 변경하고, 경로도 수정합니다. ★★★
+import MyPage from './pages/MyPageComponent.jsx'; 
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
