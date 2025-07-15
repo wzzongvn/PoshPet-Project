@@ -1,9 +1,8 @@
 /*
 * =======================================================================
-* 파일: client/src/pages/AdminServicesPage.jsx (수정)
+* 새 파일: client/src/pages/AdminServicesPage.jsx
 * =======================================================================
 * 설명: 관리자가 서비스를 보고, 새로 추가할 수 있는 페이지입니다.
-* '가격'과 '소요 시간'을 서버로 보내기 전에 숫자로 변환하는 로직을 추가했습니다.
 */
 import React, { useState, useEffect } from 'react';
 import { getAllServices, createService } from '../services/api.js';
@@ -14,8 +13,8 @@ export default function AdminServicesPage() {
   
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [price, setPrice] = useState(''); // 초기값을 빈 문자열로 변경
-  const [duration, setDuration] = useState(''); // 초기값을 빈 문자열로 변경
+  const [price, setPrice] = useState('');
+  const [duration, setDuration] = useState('');
   
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -37,7 +36,6 @@ export default function AdminServicesPage() {
     setError('');
     setSuccess('');
     try {
-      // ★★★ 문제 해결: 서버로 보내기 전에 문자열을 숫자로 변환합니다. ★★★
       const serviceData = {
         name,
         description,
