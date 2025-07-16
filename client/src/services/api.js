@@ -41,3 +41,5 @@ export const createService = (serviceData) => api.post('/services', serviceData)
 export const getAvailableSlots = (date) => api.get(`/reservations/available-slots?date=${date}`);
 // ★★★ 대시보드 통계 API 함수 추가 ★★★
 export const getDashboardStats = () => api.get('/dashboard/stats');
+// ★★★ 모든 사용자 목록 가져오기 API 함수 추가 ★★★
+export const getAllUsers = () => api.get('/admin/users');
