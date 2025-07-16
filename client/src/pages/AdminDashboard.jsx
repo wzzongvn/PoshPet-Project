@@ -1,38 +1,48 @@
 /*
-* =======================================================================
-* 3단계: 파일: client/src/pages/AdminDashboard.jsx (수정)
-* =======================================================================
-* 설명: 기존의 예약 목록 테이블과 새로운 예약 캘린더 뷰를
-* 버튼으로 전환하며 볼 수 있도록 페이지 구조를 변경합니다.
+* 3.2. 파일 수정: client/src/pages/AdminDashboard.jsx
+* -----------------------------------------------------------------------
+* 설명: 기존의 예약 목록과 함께, 월별 매출과 서비스별 예약 현황을
+* 보여주는 차트를 추가하여 대시보드를 업그레이드합니다.
 */
 import React, { useState, useEffect } from 'react';
-import { getAllReservations, updateReservationStatus } from '../services/api.js';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'moment/locale/ko'; // 한국어 설정
-import '../calendar-styles.css'; // 캘린더 전용 CSS import
-
-moment.locale('ko'); // moment 라이브러리 한국어 설정
-const localizer = momentLocalizer(moment);
+import { getAllReservations, updateReservationStatus, getDashboardStats } from '../services/api.js';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export default function AdminDashboard() {
-  const [view, setView] = useState('list'); // 'list' 또는 'calendar'
+  const [view, setView] = useState('dashboard'); // 'dashboard', 'list'
   const [reservations, setReservations] = useState([]);
+  const [stats, setStats] = useState({ monthlySales: [], serviceCounts: [] });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchReservations = async () => {
+    const fetchAdminData = async () => {
       try {
-        const response = await getAllReservations();
-        setReservations(response.data);
+        const [reservationsRes, statsRes] = await Promise.all([
+          getAllReservations(),
+          getDashboardStats()
+        ]);
+        setReservations(reservationsRes.data);
+        
+        const formattedSales = statsRes.data.monthlySales.map(item => ({
+          name: `${item._id.year}-${String(item._id.month).padStart(2, '0')}`,
+          '월 매출 (VND)': item.totalRevenue,
+        }));
+        
+        const formattedServiceCounts = statsRes.data.serviceCounts.map(item => ({
+          name: item._id,
+          '예약 수': item.count,
+        }));
+
+        setStats({ monthlySales: formattedSales, serviceCounts: formattedServiceCounts });
+
       } catch (err) {
-        setError('예약 정보를 불러오는 데 실패했습니다.');
+        setError('관리자 정보를 불러오는 데 실패했습니다.');
       } finally {
         setLoading(false);
       }
     };
-    fetchReservations();
+    fetchAdminData();
   }, []);
 
   const handleStatusChange = async (id, newStatus) => {
@@ -51,15 +61,6 @@ export default function AdminDashboard() {
     return new Date(dateString).toLocaleString('ko-KR', options);
   };
 
-  // 캘린더에 표시할 이벤트 데이터 형식으로 변환
-  const events = reservations.map(res => ({
-    id: res._id,
-    title: `${res.pet.name} - ${res.serviceName}`,
-    start: new Date(res.reservationDate),
-    end: moment(res.reservationDate).add(2, 'hours').toDate(), // 예약 시간을 2시간으로 가정
-    resource: res, // 원본 예약 데이터
-  }));
-
   if (loading) return <div className="text-center py-20">로딩 중...</div>;
   if (error) return <div className="text-center py-20 text-red-500">{error}</div>;
 
@@ -67,19 +68,46 @@ export default function AdminDashboard() {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-brown-800 font-serif">관리자 대시보드</h1>
-        {/* 뷰 전환 버튼 */}
         <div>
-          <button onClick={() => setView('list')} className={`px-4 py-2 text-sm font-medium rounded-l-lg ${view === 'list' ? 'bg-brown-600 text-white' : 'bg-white'}`}>
-            목록 보기
+          <button onClick={() => setView('dashboard')} className={`px-4 py-2 text-sm font-medium rounded-l-lg ${view === 'dashboard' ? 'bg-brown-600 text-white' : 'bg-white border'}`}>
+            통계
           </button>
-          <button onClick={() => setView('calendar')} className={`px-4 py-2 text-sm font-medium rounded-r-lg ${view === 'calendar' ? 'bg-brown-600 text-white' : 'bg-white'}`}>
-            캘린더 보기
+          <button onClick={() => setView('list')} className={`px-4 py-2 text-sm font-medium rounded-r-lg ${view === 'list' ? 'bg-brown-600 text-white' : 'bg-white border'}`}>
+            전체 예약 목록
           </button>
         </div>
       </div>
       
-      {view === 'list' ? (
-        // 예약 목록 뷰 (기존 테이블)
+      {view === 'dashboard' ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <h3 className="text-xl font-semibold text-brown-700 mb-4">월별 매출 현황</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={stats.monthlySales} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis width={80} tickFormatter={(value) => `${(value/1000).toLocaleString()}K`} />
+                <Tooltip formatter={(value) => `${value.toLocaleString()} VND`} />
+                <Legend />
+                <Line type="monotone" dataKey="월 매출 (VND)" stroke="#8D6E63" strokeWidth={2} activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <h3 className="text-xl font-semibold text-brown-700 mb-4">서비스별 예약 순위</h3>
+             <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={stats.serviceCounts} layout="vertical" margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" hide />
+                <YAxis dataKey="name" type="category" width={120} />
+                <Tooltip formatter={(value) => `${value} 건`} />
+                <Legend />
+                <Bar dataKey="예약 수" fill="#A1887F" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      ) : (
         <div className="bg-white p-8 rounded-xl shadow-lg">
           <h2 className="text-xl font-semibold text-brown-700 mb-6">전체 예약 관리</h2>
           <div className="overflow-x-auto">
@@ -98,8 +126,8 @@ export default function AdminDashboard() {
                   <tr key={res._id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{formatDate(res.reservationDate)}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{res.user.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{res.pet.name} ({res.pet.type})</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{res.serviceName}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{res.pet ? `${res.pet.name} (${res.pet.type})` : '정보 없음'}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{res.service ? res.service.name : '정보 없음'}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <select value={res.status} onChange={(e) => handleStatusChange(res._id, e.target.value)} className="rounded-md border-gray-300 shadow-sm focus:border-brown-300 focus:ring focus:ring-brown-200 focus:ring-opacity-50">
                         <option>Pending</option>
@@ -113,26 +141,6 @@ export default function AdminDashboard() {
               </tbody>
             </table>
           </div>
-        </div>
-      ) : (
-        // 예약 캘린더 뷰
-        <div className="h-[75vh]">
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: '100%' }}
-            messages={{
-              next: "다음",
-              previous: "이전",
-              today: "오늘",
-              month: "월",
-              week: "주",
-              day: "일",
-              agenda: "목록"
-            }}
-          />
         </div>
       )}
     </div>

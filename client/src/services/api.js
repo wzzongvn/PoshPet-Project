@@ -39,3 +39,5 @@ export const updateReservationStatus = (id, status) => api.put(`/admin/reservati
 export const getAllServices = () => api.get('/services');
 export const createService = (serviceData) => api.post('/services', serviceData);
 export const getAvailableSlots = (date) => api.get(`/reservations/available-slots?date=${date}`);
+// ★★★ 대시보드 통계 API 함수 추가 ★★★
+export const getDashboardStats = () => api.get('/dashboard/stats');
