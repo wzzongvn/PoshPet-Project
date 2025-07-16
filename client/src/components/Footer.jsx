@@ -15,7 +15,7 @@ export default function Footer() {
                  <img src="/assets/image_9791c6.jpg" alt="PoshPet Logo" className="h-24 w-auto filter invert brightness-200"/>
             </div>
           <p className="text-sm">
-            주소: <a href="https://maps.app.goo.gl/AjubbtPsY7a3pksV6" target="_blank" rel="noopener noreferrer" className="hover:underline">베트남 하노이시</a> | 대표: OOO
+            주소: 베트남 하노이시 | 대표: OOO | 사업자등록번호: 123-45-67890
           </p>
           <p className="mt-2 text-sm">
             고객센터: 02-1234-5678 | 이메일: contact@poshpet.com

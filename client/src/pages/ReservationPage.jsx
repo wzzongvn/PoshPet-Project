@@ -2,23 +2,22 @@
 * =======================================================================
 * 파일: client/src/pages/ReservationPage.jsx (수정)
 * =======================================================================
-* 설명: 예약 폼 디자인을 더 세련되게 다듬었습니다.
+* 설명: 예약 폼 디자인을 더 세련되게 다듬고, 모든 변수 선언 오류를 수정했습니다.
 */
 import React, { useState, useEffect } from 'react';
 import { getMyPets, createReservation, getAllServices, getAvailableSlots } from '../services/api.js';
 
 export default function ReservationPage({ setCurrentPage, user }) {
-  const [myPets, setMyPets] = useState();
-  const = useState();
-  const = useState();
-  
-  const = useState('');
-  const = useState('');
-  const = useState('');
-  const = useState('');
+  const [myPets, setMyPets] = useState([]);
+  const [services, setServices] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [selectedPet, setSelectedPet] = useState('');
+  const [selectedService, setSelectedService] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedSlot, setSelectedSlot] = useState('');
   const [notes, setNotes] = useState('');
   const [error, setError] = useState('');
-  const = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -26,11 +25,11 @@ export default function ReservationPage({ setCurrentPage, user }) {
         try {
           const petsRes = await getMyPets();
           setMyPets(petsRes.data);
-          if (petsRes.data.length > 0) setSelectedPet(petsRes.data._id);
+          if (petsRes.data.length > 0) setSelectedPet(petsRes.data[0]._id);
 
           const servicesRes = await getAllServices();
           setServices(servicesRes.data);
-          if (servicesRes.data.length > 0) setSelectedService(servicesRes.data._id);
+          if (servicesRes.data.length > 0) setSelectedService(servicesRes.data[0]._id);
 
         } catch (err) {
           setError('정보를 불러오는 데 실패했습니다.');
@@ -49,19 +48,19 @@ export default function ReservationPage({ setCurrentPage, user }) {
           setSelectedSlot('');
         } catch (err) {
           setError('예약 가능 시간을 불러오는 데 실패했습니다.');
-          setAvailableSlots();
+          setAvailableSlots([]);
         }
       };
       fetchSlots();
     }
-  },);
+  }, [selectedDate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    if (!selectedPet ||!selectedService ||!selectedSlot) {
+    if (!selectedPet || !selectedService || !selectedSlot) {
       setError('펫, 서비스, 예약 시간을 모두 선택해주세요.');
       return;
     }
@@ -71,9 +70,7 @@ export default function ReservationPage({ setCurrentPage, user }) {
       await createReservation(reservationData);
       setSuccess('예약이 성공적으로 접수되었습니다. 마이페이지에서 확인해주세요.');
     } catch (err) {
-      setError(err.response?.data?.msg |
-
-| '예약 생성에 실패했습니다.');
+      setError(err.response?.data?.msg || '예약 생성에 실패했습니다.');
     }
   };
 
@@ -91,7 +88,7 @@ export default function ReservationPage({ setCurrentPage, user }) {
           <form className="space-y-8" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="pet" className="block text-sm font-medium text-gray-700">1. 예약할 펫 선택</label>
-              {myPets.length > 0? ( <select id="pet" value={selectedPet} onChange={e => setSelectedPet(e.target.value)} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm rounded-md">{myPets.map(p => <option key={p._id} value={p._id}>{p.name} ({p.breed})</option>)}</select> ) : ( <p className="text-sm text-gray-500 mt-2">등록된 반려동물이 없습니다. <button type="button" onClick={() => setCurrentPage('my-page')} className="font-medium text-brown-600 hover:text-brown-500 ml-1">마이페이지에서 추가해주세요.</button></p> )}
+              {myPets.length > 0 ? ( <select id="pet" value={selectedPet} onChange={e => setSelectedPet(e.target.value)} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm rounded-md">{myPets.map(p => <option key={p._id} value={p._id}>{p.name} ({p.breed})</option>)}</select> ) : ( <p className="text-sm text-gray-500 mt-2">등록된 반려동물이 없습니다. <button type="button" onClick={() => setCurrentPage('my-page')} className="font-medium text-brown-600 hover:text-brown-500 ml-1">마이페이지에서 추가해주세요.</button></p> )}
             </div>
             <div>
               <label htmlFor="service" className="block text-sm font-medium text-gray-700">2. 서비스 선택</label>
@@ -105,13 +102,13 @@ export default function ReservationPage({ setCurrentPage, user }) {
               <div>
                 <label className="block text-sm font-medium text-gray-700">4. 시간 선택</label>
                 <div className="mt-2 grid grid-cols-3 sm:grid-cols-4 gap-2">
-                  {availableSlots.length > 0? (
+                  {availableSlots.length > 0 ? (
                     availableSlots.map(slot => (
                       <button 
                         key={slot}
                         type="button"
                         onClick={() => setSelectedSlot(slot)}
-                        className={`px-3 py-2 text-sm rounded-md transition ${selectedSlot === slot? 'bg-brown-600 text-white' : 'bg-cream-100 hover:bg-brown-200'}`}
+                        className={`px-3 py-2 text-sm rounded-md transition ${selectedSlot === slot ? 'bg-brown-600 text-white' : 'bg-cream-100 hover:bg-brown-200'}`}
                       >
                         {new Date(slot).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: true })}
                       </button>

@@ -23,7 +23,7 @@ export default function App() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  },);
+  }, []);
 
   const handleLogin = (userData, userToken) => {
     setUser(userData);
@@ -46,11 +46,11 @@ export default function App() {
       case 'reservation':
         return <ReservationPage setCurrentPage={setCurrentPage} user={user} />;
       case 'my-page':
-        return user? <MyPage user={user} /> : <LoginPage setCurrentPage={setCurrentPage} onLogin={handleLogin} />;
+        return user ? <MyPage user={user} /> : <LoginPage setCurrentPage={setCurrentPage} onLogin={handleLogin} />;
       case 'admin-dashboard':
-        return user && user.role === 'admin'? <AdminDashboard /> : <HomePage setCurrentPage={setCurrentPage} />;
+        return user && user.role === 'admin' ? <AdminDashboard /> : <HomePage setCurrentPage={setCurrentPage} />;
       case 'admin-services':
-        return user && user.role === 'admin'? <AdminServicesPage /> : <HomePage setCurrentPage={setCurrentPage} />;
+        return user && user.role === 'admin' ? <AdminServicesPage /> : <HomePage setCurrentPage={setCurrentPage} />;
       case 'home':
       default:
         return <HomePage setCurrentPage={setCurrentPage} />;

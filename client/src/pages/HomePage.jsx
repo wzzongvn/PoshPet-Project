@@ -2,28 +2,24 @@
 * =======================================================================
 * 파일: client/src/pages/HomePage.jsx (수정)
 * =======================================================================
-* 설명: 전체적인 디자인을 세련되게 다듬고, 서비스 메뉴를 추가했습니다.
+* 설명: 전체적인 디자인을 더 세련되게 다듬고, 가독성을 높였습니다.
 */
 import React from 'react';
 
-const ServiceCard = ({ icon, name, description }) => (
-  <div className="pt-6">
-    <div className="flow-root bg-cream-50 rounded-lg px-6 pb-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg h-full">
-      <div className="-mt-6">
-        <div>
-          <span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">
-            {icon}
-          </span>
-        </div>
-        <h3 className="mt-8 text-lg font-medium text-brown-800 tracking-tight font-serif">{name}</h3>
-        <p className="mt-5 text-base text-gray-500">{description}</p>
-      </div>
-    </div>
-  </div>
-);
+const ScissorsIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg> );
+const HotelIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9.5L12 4l9 5.5"></path><path d="M19 13v6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 19.5V13"></path><path d="M12 15v5"></path><path d="M9 12v8"></path><path d="M15 12v8"></path></svg> );
+const SpaIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22a7 7 0 00-7-7c0-2 1-4 3-5s4-1 6 0c2 1 3 3 3 5a7 7 0 00-7 7z"></path><path d="M12 15V3"></path><path d="M9 3h6"></path><path d="M9 6h6"></path></svg> );
+const TrainingIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 14l-8-8 1.5-1.5L12 11l6.5-6.5L20 6l-8 8z"></path><path d="M12 14v8"></path></svg> );
+const HealthCareIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L12 22"></path><path d="M20 10L4 10"></path></svg> );
 
 export default function HomePage({ setCurrentPage }) {
-  const services =;
+  const services = [
+    { name: '전문 미용', description: '숙련된 그루머가 최신 스타일로 완벽하게 케어합니다.', icon: <ScissorsIcon /> },
+    { name: '안심 호텔', description: '넓고 쾌적한 공간에서 편안하고 안전하게 머무릅니다.', icon: <HotelIcon /> },
+    { name: '프리미엄 스파', description: '피부와 모질 개선을 위한 최고급 스파 서비스입니다.', icon: <SpaIcon /> },
+    { name: '긍정 강화 훈련', description: '전문 훈련사와 함께하는 즐거운 행동 교정 프로그램입니다.', icon: <TrainingIcon /> },
+    { name: '맞춤 건강 관리', description: '정기적인 건강 체크와 맞춤형 영양 상담을 제공합니다.', icon: <HealthCareIcon /> },
+  ];
 
   return (
     <div className="bg-cream-50">
@@ -62,8 +58,31 @@ export default function HomePage({ setCurrentPage }) {
           </div>
           <div className="mt-12">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {services.map((service) => (
-                <ServiceCard key={service.name} {...service} />
+              {services.slice(0, 3).map((service) => (
+                <div key={service.name} className="pt-6">
+                  <div className="flow-root bg-cream-50 rounded-lg px-6 pb-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <div className="-mt-6">
+                      <div><span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">{service.icon}</span></div>
+                      <h3 className="mt-8 text-lg font-medium text-brown-800 tracking-tight font-serif">{service.name}</h3>
+                      <p className="mt-5 text-base text-gray-500">{service.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+           <div className="mt-8">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              {services.slice(3).map((service) => (
+                <div key={service.name} className="pt-6">
+                  <div className="flow-root bg-cream-50 rounded-lg px-6 pb-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                    <div className="-mt-6">
+                      <div><span className="inline-flex items-center justify-center p-3 bg-brown-600 rounded-md shadow-lg text-white">{service.icon}</span></div>
+                      <h3 className="mt-8 text-lg font-medium text-brown-800 tracking-tight font-serif">{service.name}</h3>
+                      <p className="mt-5 text-base text-gray-500">{service.description}</p>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -78,9 +97,9 @@ export default function HomePage({ setCurrentPage }) {
                 <p className="mt-4 text-lg text-gray-500">단 3단계만으로 소중한 반려동물에게 최고의 시간을 선물하세요.</p>
             </div>
             <div className="mt-12 space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
-                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto font-bold text-lg">1</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">서비스 선택</h3><p className="mt-2 text-base text-gray-500">원하시는 서비스를 선택하세요.</p></div>
-                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto font-bold text-lg">2</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">날짜/시간 선택</h3><p className="mt-2 text-base text-gray-500">예약 가능한 날짜와 시간을 확인해요.</p></div>
-                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto font-bold text-lg">3</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">예약 및 결제</h3><p className="mt-2 text-base text-gray-500">간편하게 예약하고 결제를 완료해요.</p></div>
+                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">1</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">서비스 선택</h3><p className="mt-2 text-base text-gray-500">원하시는 서비스를 선택하세요.</p></div>
+                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">2</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">날짜/시간 선택</h3><p className="mt-2 text-base text-gray-500">예약 가능한 날짜와 시간을 확인해요.</p></div>
+                <div className="text-center"><div className="flex items-center justify-center h-12 w-12 rounded-full bg-brown-600 text-white mx-auto">3</div><h3 className="mt-5 text-lg font-medium text-brown-800 font-serif">예약 및 결제</h3><p className="mt-2 text-base text-gray-500">간편하게 예약하고 결제를 완료해요.</p></div>
             </div>
         </div>
       </section>
