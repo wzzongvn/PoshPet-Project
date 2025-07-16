@@ -2,7 +2,7 @@
 * =======================================================================
 * 파일: client/src/App.jsx (수정)
 * =======================================================================
-* 설명: 관리자가 '서비스 관리' 페이지로 이동할 수 있도록 라우팅 로직을 추가합니다.
+* 설명: 전체적인 레이아웃과 페이지 전환 로직을 관리합니다.
 */
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header.jsx';
@@ -12,7 +12,7 @@ import LoginPage from './pages/LoginPage.jsx';
 import ReservationPage from './pages/ReservationPage.jsx';
 import MyPage from './pages/MyPageComponent.jsx'; 
 import AdminDashboard from './pages/AdminDashboard.jsx';
-import AdminServicesPage from './pages/AdminServicesPage.jsx'; // 서비스 관리 페이지 import
+import AdminServicesPage from './pages/AdminServicesPage.jsx';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -23,7 +23,7 @@ export default function App() {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-  }, []);
+  },);
 
   const handleLogin = (userData, userToken) => {
     setUser(userData);
@@ -46,12 +46,11 @@ export default function App() {
       case 'reservation':
         return <ReservationPage setCurrentPage={setCurrentPage} user={user} />;
       case 'my-page':
-        return user ? <MyPage user={user} /> : <LoginPage setCurrentPage={setCurrentPage} onLogin={handleLogin} />;
+        return user? <MyPage user={user} /> : <LoginPage setCurrentPage={setCurrentPage} onLogin={handleLogin} />;
       case 'admin-dashboard':
-        return user && user.role === 'admin' ? <AdminDashboard /> : <HomePage setCurrentPage={setCurrentPage} />;
-      // ★★★ 서비스 관리 페이지 렌더링 로직 추가 ★★★
+        return user && user.role === 'admin'? <AdminDashboard /> : <HomePage setCurrentPage={setCurrentPage} />;
       case 'admin-services':
-        return user && user.role === 'admin' ? <AdminServicesPage /> : <HomePage setCurrentPage={setCurrentPage} />;
+        return user && user.role === 'admin'? <AdminServicesPage /> : <HomePage setCurrentPage={setCurrentPage} />;
       case 'home':
       default:
         return <HomePage setCurrentPage={setCurrentPage} />;
@@ -59,9 +58,9 @@ export default function App() {
   };
 
   return (
-    <div className="antialiased text-gray-800 bg-cream-50">
+    <div className="font-sans antialiased text-brown-800 bg-cream-50">
       <Header setCurrentPage={setCurrentPage} user={user} onLogout={handleLogout} />
-      <main className="min-h-screen">
+      <main>
         {renderPage()}
       </main>
       <Footer />
