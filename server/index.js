@@ -36,6 +36,9 @@ app.use('/api/services', require('./routes/serviceRoutes'));
 // ★★★ 대시보드 API 라우트 연결 (추가) ★★★
 app.use('/api/dashboard', require('./routes/dashboardRoutes'));
 
+// ★★★ 리뷰 API 라우트 연결 (추가) ★★★
+app.use('/api/reviews', require('./routes/reviewRoutes'));
+
 app.listen(PORT, () => {
   console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
 });

@@ -1,9 +1,8 @@
 /*
 * =======================================================================
-* 파일: client/src/services/api.js (수정)
+* 1단계: 파일 수정 - client/src/services/api.js
 * =======================================================================
-* 설명: 모든 API 요청에 자동으로 인증 토큰을 포함하도록 수정합니다.
-* 이 수정으로 인해 관리자 페이지의 모든 기능이 정상적으로 작동하게 됩니다.
+* 설명: 리뷰 작성 및 조회를 위한 API 함수를 추가합니다.
 */
 import axios from 'axios';
 
@@ -14,7 +13,6 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// ★★★ 문제 해결: 모든 요청에 자동으로 인증 토큰을 포함시킵니다. ★★★
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -23,9 +21,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export const registerUser = (userData) => api.post('/users/register', userData);
@@ -39,7 +35,9 @@ export const updateReservationStatus = (id, status) => api.put(`/admin/reservati
 export const getAllServices = () => api.get('/services');
 export const createService = (serviceData) => api.post('/services', serviceData);
 export const getAvailableSlots = (date) => api.get(`/reservations/available-slots?date=${date}`);
-// ★★★ 대시보드 통계 API 함수 추가 ★★★
 export const getDashboardStats = () => api.get('/dashboard/stats');
-// ★★★ 모든 사용자 목록 가져오기 API 함수 추가 ★★★
 export const getAllUsers = () => api.get('/admin/users');
+
+// ★★★ 리뷰 API 함수 추가 ★★★
+export const createReview = (reviewData) => api.post('/reviews', reviewData);
+export const getAllReviews = () => api.get('/reviews');
