@@ -1,9 +1,9 @@
 /*
 * =======================================================================
-* 3단계: 파일 수정 - client/src/pages/MyPageComponent.jsx
+* 3단계: 파일 수정 - client/src/pages/MyPageComponent.jsx (최종 수정본)
 * =======================================================================
-* 설명: '완료된' 예약 내역 옆에 '리뷰 작성' 버튼을 추가하고,
-* 버튼 클릭 시 리뷰 작성 모달을 띄우는 기능을 구현합니다.
+* 설명: 사라졌던 '펫 관리' 기능을 복원하고, 예약 내역과 리뷰 기능을 통합한
+* 완전한 최종 버전입니다.
 */
 import React, { useState, useEffect } from 'react';
 import { getMyPets, addPet, getMyReservations } from '../services/api.js';
@@ -12,12 +12,15 @@ import ReviewModal from '../components/ReviewModal.jsx';
 export default function MyPageComponent({ user }) {
   const [pets, setPets] = useState([]);
   const [reservations, setReservations] = useState([]);
+  
   const [showAddForm, setShowAddForm] = useState(false);
   const [name, setName] = useState('');
   const [type, setType] = useState('Dog');
   const [breed, setBreed] = useState('');
+  
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [selectedReservationForReview, setSelectedReservationForReview] = useState(null);
 
@@ -42,13 +45,16 @@ export default function MyPageComponent({ user }) {
 
   const handleAddPet = async (e) => {
     e.preventDefault();
-    setError(''); setSuccess('');
+    setError(''); 
+    setSuccess('');
     try {
       const response = await addPet({ name, type, breed });
       setPets([...pets, response.data]);
       setSuccess(`${name} 정보가 성공적으로 추가되었습니다.`);
       setShowAddForm(false);
-      setName(''); setType('Dog'); setBreed('');
+      setName(''); 
+      setType('Dog'); 
+      setBreed('');
     } catch (err) {
       setError(err.response?.data?.msg || '반려동물 추가에 실패했습니다.');
     }
@@ -76,8 +82,49 @@ export default function MyPageComponent({ user }) {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <h1 className="text-3xl font-bold text-brown-800 font-serif mb-8">마이페이지</h1>
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-1 space-y-8">{/* ... 펫 관리 부분 ... */}</div>
+        {/* 왼쪽: 반려동물 관리 */}
+        <div className="lg:col-span-1 space-y-8">
+          <div className="bg-white p-6 rounded-xl shadow-lg">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-brown-700">나의 사랑스러운 펫</h2>
+              <button onClick={() => setShowAddForm(!showAddForm)} className="bg-brown-100 text-brown-700 px-3 py-1 rounded-md text-sm font-medium hover:bg-brown-200">
+                {showAddForm ? '닫기' : '추가'}
+              </button>
+            </div>
+            {pets.length > 0 ? (
+              <ul className="divide-y divide-gray-200">{pets.map(pet => ( <li key={pet._id} className="py-3 flex items-center"><p className="text-sm font-medium text-gray-900">{pet.name}</p><p className="text-sm text-gray-500 ml-auto">{pet.type} - {pet.breed}</p></li> ))}</ul>
+            ) : ( <p className="text-gray-500 text-sm">아직 등록된 반려동물이 없습니다.</p> )}
+          </div>
+
+          {showAddForm && (
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <h2 className="text-xl font-semibold text-brown-700 mb-4">새로운 가족 등록하기</h2>
+              <form onSubmit={handleAddPet} className="space-y-4">
+                <div>
+                  <label htmlFor="pet-name" className="block text-sm font-medium text-gray-700">이름</label>
+                  <input type="text" id="pet-name" value={name} onChange={e => setName(e.target.value)} required className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label htmlFor="pet-type" className="block text-sm font-medium text-gray-700">종류</label>
+                  <select id="pet-type" value={type} onChange={e => setType(e.target.value)} className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-brown-500 focus:border-brown-500 sm:text-sm rounded-md"><option>Dog</option><option>Cat</option><option>Other</option></select>
+                </div>
+                <div>
+                  <label htmlFor="pet-breed" className="block text-sm font-medium text-gray-700">품종</label>
+                  <input type="text" id="pet-breed" value={breed} onChange={e => setBreed(e.target.value)} className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                </div>
+                {error && <p className="text-sm text-red-600">{error}</p>}
+                {success && <p className="text-sm text-green-600">{success}</p>}
+                <div className="text-right">
+                  <button type="submit" className="bg-brown-600 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-brown-700">저장하기</button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
+
+        {/* 오른쪽: 예약 내역 */}
         <div className="lg:col-span-2 bg-white p-8 rounded-xl shadow-lg">
           <h2 className="text-xl font-semibold text-brown-700 mb-6">예약 내역</h2>
           <div className="space-y-4">
@@ -103,6 +150,7 @@ export default function MyPageComponent({ user }) {
           </div>
         </div>
       </div>
+      
       {isReviewModalOpen && (
         <ReviewModal reservation={selectedReservationForReview} onClose={closeReviewModal} />
       )}
