@@ -1,8 +1,7 @@
 /*
 * =======================================================================
-* 파일: client/src/pages/LoginPage.jsx (수정)
+* 파일: client/src/pages/LoginPage.jsx
 * =======================================================================
-* 설명: 로그인 폼 디자인을 더 세련되게 다듬었습니다.
 */
 import React, { useState } from 'react';
 import { registerUser, loginUser } from '../services/api.js';

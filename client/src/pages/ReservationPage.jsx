@@ -1,8 +1,7 @@
 /*
 * =======================================================================
-* 파일: client/src/pages/ReservationPage.jsx (수정)
+* 파일: client/src/pages/ReservationPage.jsx
 * =======================================================================
-* 설명: 예약 폼 디자인을 더 세련되게 다듬고, 모든 변수 선언 오류를 수정했습니다.
 */
 import React, { useState, useEffect } from 'react';
 import { getMyPets, createReservation, getAllServices, getAvailableSlots } from '../services/api.js';
@@ -11,6 +10,7 @@ export default function ReservationPage({ setCurrentPage, user }) {
   const [myPets, setMyPets] = useState([]);
   const [services, setServices] = useState([]);
   const [availableSlots, setAvailableSlots] = useState([]);
+  
   const [selectedPet, setSelectedPet] = useState('');
   const [selectedService, setSelectedService] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
