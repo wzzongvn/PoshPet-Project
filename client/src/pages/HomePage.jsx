@@ -5,6 +5,7 @@
 * 설명: 고객들의 최신 리뷰를 보여주는 '고객 후기' 섹션을 추가합니다.
 */
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'; // ★★★ 1. useTranslation 훅 import
 import { getAllReviews } from '../services/api.js';
 import StarRatingDisplay from '../components/StarRatingDisplay.jsx';
 
@@ -26,6 +27,7 @@ const ServiceCard = ({ imageUrl, title, description }) => (
 );
 
 export default function HomePage({ setCurrentPage }) {
+  const { t } = useTranslation(); // ★★★ 2. 훅 사용
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
